@@ -9,6 +9,8 @@ const CJK := {
 	"zh_HK": "res://fonts/NotoCJK_zh_HK.otf",
 }
 
+const EMOJI := "res://fonts/NotoColorEmoji.ttf"
+
 static var font: FontVariation = null
 static var lang_code := ""
 
@@ -40,6 +42,11 @@ static func _set_fallbacks() -> void:
 	var arr: Array[Font] = []
 	if fb is Font:
 		arr.append(fb)
+	# Emoji a color (Noto Color Emoji, OFL) al final: solo se usa si ninguna otra fuente tiene el glifo.
+	# En web no hay fuentes del sistema, asi que sin esto los emoji salian como cuadrados.
+	var em = load(EMOJI)
+	if em is Font:
+		arr.append(em)
 	font.fallbacks = arr
 
 
